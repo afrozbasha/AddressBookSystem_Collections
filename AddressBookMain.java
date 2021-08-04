@@ -15,8 +15,7 @@ public class AddressBookMain {
         Scanner sc = new Scanner(System.in);
 
         System.out.println("Welcome to Address Book System");
-
-
+        
         boolean flag = true;
         do {
             System.out.println("\nEnter the Address Book Operation Option");
@@ -26,6 +25,9 @@ public class AddressBookMain {
             System.out.println("3. Remove person from address Book");
             System.out.println("4. get person details from address Book");
             System.out.println("5. Print Address Book");
+            System.out.println("6. Store current address book to the system");
+            System.out.println("7. Print all Address Books from system");
+            System.out.println("8. create new address book");
             int choice = sc.nextInt();
             switch(choice) {
                 case 1:
@@ -45,12 +47,19 @@ public class AddressBookMain {
                     break;
                 case 5:
                     obj.mainObj.printBook();
+                    break;
+                case 6:
+                    obj.mainObj.storeCurrentAddressBook();
+                    break;
+                case 7:
+                    obj.mainObj.printAddressBooks();
+                    break;
+                case 8:
+                    obj.mainObj.creatNewAddressBooks();
+                    break;
                 default:
                     flag = false;
             }
         }while(flag);
-
-
-
     }
 }

@@ -1,9 +1,6 @@
 package com.AddressBookCollection;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 public class AddressBookManager {
         Scanner sc = new Scanner(System.in);
@@ -12,6 +9,7 @@ public class AddressBookManager {
          * Here I modified the access of the bookList to protected.
          * Because protected objects can be accessed in inner classes.
          */
+        Map<String, List> storeAddressBooks = new HashMap<>();
         List<AddressBookBluePrint> bookList = new ArrayList<>();
         AddressBookBluePrint person;
 
@@ -152,5 +150,30 @@ public class AddressBookManager {
                 System.out.println(perObj);
             }
         }
+
+    //method to store multiple address books
+    public void storeCurrentAddressBook() {
+        System.out.println("Enter name for address book: ");
+        String addressBookName = sc.next();
+        storeAddressBooks.put(addressBookName, bookList);
+    }
+
+    //method to print all address books from system
+    public void printAddressBooks() {
+        System.out.println(storeAddressBooks);
+        System.out.println("Address book is stored");
+    }
+
+    @Override
+    public String toString() {
+        return "AddressBookManager [storeAddressBooks=" + storeAddressBooks + ", addressBookList=" + bookList
+                + ", sc=" + sc + "]";
+    }
+
+    //method to create new address book
+    public void creatNewAddressBooks() {
+        bookList.clear();
+        System.out.println("New Address book is created");
+    }
 
 }
