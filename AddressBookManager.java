@@ -136,13 +136,21 @@ public class AddressBookManager {
             System.out.printf("Updated Person details = " + tempObj);
         }
 
+        //remove person with help of his name
         public void removePersonDetails() {
             System.out.printf("Enter Name to Delete person in Records : ");
             String name = sc.next();
             AddressBookBluePrint person = searchPerson(name);
             bookList.remove(person);
-            System.out.printf("Deleted person = " + person);
+            System.out.println("Deleted person = " + person);
 
+        }
+
+        //print hole array list book
+        public void printBook(){
+            for (AddressBookBluePrint perObj: bookList){
+                System.out.println(perObj);
+            }
         }
 
 }
