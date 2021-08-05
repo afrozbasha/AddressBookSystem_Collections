@@ -26,6 +26,8 @@ public class AddressBookMain {
             System.out.println("6. Store current address book to the system");
             System.out.println("7. Print all Address Books from system");
             System.out.println("8. create new address book");
+            System.out.println("9. Search Persons in a City");
+            System.out.println("10. Search Persons in a State");
             int choice = sc.nextInt();
             switch(choice) {
                 case 1:
@@ -54,6 +56,12 @@ public class AddressBookMain {
                     break;
                 case 8:
                     obj.mainObj.creatNewAddressBooks();
+                    break;
+                case 9:
+                    obj.mainObj.searchPersonInCity();
+                    break;
+                case 10:
+                    obj.mainObj.searchPersonInState();
                     break;
                 default:
                     flag = false;

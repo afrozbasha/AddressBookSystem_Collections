@@ -13,6 +13,9 @@ public class AddressBookManager {
         List<AddressBookBluePrint> bookList = new ArrayList<>();
         AddressBookBluePrint person;
 
+        Map<String, AddressBookBluePrint> cityList = new HashMap<>();
+        Map<String, AddressBookBluePrint> stateList = new HashMap<>();
+
         //add an ArrayList
         public void addPersonAddress(AddressBookBluePrint personAddress) {
             bookList.add(personAddress);
@@ -71,10 +74,41 @@ public class AddressBookManager {
                 addPersonAddress(person);  //add an ArrayList
             }
 
+            //store multiple city's with persons data
+            if (cityList.size() == 0){
+                cityList.put(city, person);
+            }else {
+                cityList.put(city, person);
+            }
+
+            if (stateList.size()==0){
+                stateList.put(state, person);
+            }else {
+                stateList.put(state, person);
+            }
         }
 
+        //searching person using City name
+        public void searchPersonInCity(){
+            System.out.println("Enter City Name : ");
+            String cityName = sc.next();
+            if (cityList.containsKey(cityName)){
+                System.out.println(cityList.get(cityName));
+            }
+            System.out.println("No city in this name");
+        }
+    //searching person using State name
+    public void searchPersonInState(){
+        System.out.println("Enter State Name : ");
+        String StateName = sc.next();
+        if (stateList.containsKey(StateName)){
+            System.out.println(stateList.get(StateName));
+        }
+        System.out.println("No State in this name");
+    }
+
         //searching person using first name
-        AddressBookBluePrint searchPerson(String name) {
+        public AddressBookBluePrint searchPerson(String name) {
             Iterator iterator = bookList.iterator();
             for (AddressBookBluePrint names : bookList) {
                 if (iterator.hasNext()) {
@@ -191,5 +225,19 @@ public class AddressBookManager {
         bookList.clear();
         System.out.println("New Address book is created");
     }
+
+
+
+//    public void searchPersonInCityOrSate(){
+//            AddressBookManager map = new AddressBookManager();
+//            for (HashMap<String, List> diffAddressBooks : map.storeAddressBooks){
+//
+//            }
+//    }
+
+
+
+
+
 
 }
