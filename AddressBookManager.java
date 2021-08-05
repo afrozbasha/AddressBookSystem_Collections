@@ -50,10 +50,26 @@ public class AddressBookManager {
                     email,
                     zip,
                     mobileNumber);
-            System.out.printf(person.toString());
+            System.out.println(person.toString());
 
-            //add an ArrayList
-            addPersonAddress(person);
+
+            /**
+             * check duplicate persons in arraylist using iterator class
+             * then shows Details already Exists in address book
+             */
+            if (bookList.size() == 0){
+                addPersonAddress(person);  //add an ArrayList
+            }else {
+                Iterator<AddressBookBluePrint> name = bookList.iterator();
+                while (name.hasNext()){
+                    AddressBookBluePrint tempPerson = name.next();
+                    if (person.getFirstName().contains(firstName)){
+                        System.out.println(firstName+"Details already Exists in address book");
+                        return;
+                    }
+                }
+                addPersonAddress(person);  //add an ArrayList
+            }
 
         }
 
