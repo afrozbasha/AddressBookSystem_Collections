@@ -9,6 +9,9 @@ public class AddressBookManager implements MultipleAddressBook {
     public ArrayList<AddressBookBluePrint> totalEntries;
     Scanner sc = new Scanner(System.in);
 
+    //counting the count persons
+    public int count = 0;
+
     // Constructor
     public AddressBookManager() {
         book = new HashMap<>();
@@ -18,6 +21,7 @@ public class AddressBookManager implements MultipleAddressBook {
         totalEntries = new ArrayList<>();
     }
 
+    @Override
     public void addAddressBook(String BookName, String FirstName, String LastName, String Address, String City, int Zip,
                                String State, long PhoneNumber, String Email) {
         AddressBookBluePrint adder = new AddressBookBluePrint(BookName, FirstName, LastName, Address, City, Zip, State, PhoneNumber, Email);
@@ -26,6 +30,7 @@ public class AddressBookManager implements MultipleAddressBook {
         multiBook.put(BookName, totalEntries);
         city.put(City, totalEntries);
         state.put(State, totalEntries);
+        count++;
     }
 
 
@@ -188,11 +193,16 @@ public class AddressBookManager implements MultipleAddressBook {
         if (flag == 1) System.out.println("no records found");
     }
 
+    //counting the count persons
+    private void getCountOfPersons() {
+        System.out.println("total count is " + count);
+    }
+
 
     // This method helps user to choose action
     public boolean makechoice() {
         System.out.println("enter 1:add contact 2:view by city 3:view by state 4:edit contact 5:delete contact" +
-                " 6:person by city or state or 0 to quit");
+                " 6:person by city or state 7:get count of person or 0 to quit");
         int check = sc.nextInt();
         boolean conditon = true;
         switch (check) {
@@ -214,6 +224,9 @@ public class AddressBookManager implements MultipleAddressBook {
             case 6:
                 getContactByCityOrState();
                 break;
+            case 7:
+                getCountOfPersons();
+                break;
             case 0:
                 conditon = false;
                 break;
@@ -222,8 +235,4 @@ public class AddressBookManager implements MultipleAddressBook {
         }
         return conditon;
     }
-
-
-
-
 }
