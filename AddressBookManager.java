@@ -1,241 +1,227 @@
 package com.AddressBookCollection;
-
 import java.util.*;
 
-public class AddressBookManager {
-        Scanner sc = new Scanner(System.in);
-        /**
-         * Added AddressBookManager class to add an ArrayList code in it.
-         * Here I modified the access of the bookList to protected.
-         * Because protected objects can be accessed in inner classes.
-         */
-        Map<String, List> storeAddressBooks = new HashMap<>();
-        List<AddressBookBluePrint> bookList = new ArrayList<>();
-        AddressBookBluePrint person;
+public class AddressBookManager implements MultipleAddressBook {
+    public Map<String, ArrayList<AddressBookBluePrint>> book;
+    public Map<String, ArrayList<AddressBookBluePrint>> multiBook;
+    public Map<String, ArrayList<AddressBookBluePrint>> city;
+    public Map<String, ArrayList<AddressBookBluePrint>> state;
+    public ArrayList<AddressBookBluePrint> totalEntries;
+    Scanner sc = new Scanner(System.in);
 
-        Map<String, AddressBookBluePrint> cityList = new HashMap<>();
-        Map<String, AddressBookBluePrint> stateList = new HashMap<>();
+    // Constructor
+    public AddressBookManager() {
+        book = new HashMap<>();
+        multiBook = new HashMap<>();
+        city = new HashMap<>();
+        state = new HashMap<>();
+        totalEntries = new ArrayList<>();
+    }
 
-        //add an ArrayList
-        public void addPersonAddress(AddressBookBluePrint personAddress) {
-            bookList.add(personAddress);
-        }
-
-        //Entering person details via AddressBookBluePrint
-        public void callAddressBookBluePrint() {
-            Scanner sc = new Scanner(System.in);
-
-            //Entering person details via AddressBookBluePrint
-            System.out.print("Enter firstName: ");
-            String firstName = sc.next();
-            System.out.print("Enter lastName: ");
-            String lastName = sc.next();
-            System.out.print("Enter address: ");
-            String address = sc.next();
-            System.out.print("Enter city: ");
-            String city = sc.next();
-            System.out.print("Enter state: ");
-            String state = sc.next();
-            System.out.print("Enter email: ");
-            String email = sc.next();
-            System.out.print("Enter zip: ");
-            int zip = sc.nextInt();
-            System.out.print("Enter mobileNumber: ");
-            long mobileNumber = sc.nextLong();
+    public void addAddressBook(String BookName, String FirstName, String LastName, String Address, String City, int Zip,
+                               String State, long PhoneNumber, String Email) {
+        AddressBookBluePrint adder = new AddressBookBluePrint(BookName, FirstName, LastName, Address, City, Zip, State, PhoneNumber, Email);
+        totalEntries.add(adder);
+        book.put(FirstName, totalEntries);
+        multiBook.put(BookName, totalEntries);
+        city.put(City, totalEntries);
+        state.put(State, totalEntries);
+    }
 
 
-            //passing variables via constructor details in AddressBookBluePrint
-            person = new AddressBookBluePrint(firstName,
-                    lastName,
-                    address,
-                    city,
-                    state,
-                    email,
-                    zip,
-                    mobileNumber);
-            System.out.println(person.toString());
 
+    //This method takes console arguments
+    public void callAddressBook() {
+        System.out.println("Enter Address Book Name");
+        String BookName = sc.next();
+        System.out.println("Enter you first name");
+        String FirstName = sc.next();
+        System.out.println("Enter you last name");
+        String LastName = sc.next();
+        sc.nextLine();
+        System.out.println("Enter you Address name");
+        String Address = sc.nextLine();
+        System.out.println("Enter you zip ");
+        int Zip = sc.nextInt();
+        System.out.println("Enter you city name");
+        String City = sc.next();
+        System.out.println("Enter you state name");
+        String State = sc.next();
+        sc.nextLine();
+        System.out.println("Enter you phone number");
+        long PhoneNumber = sc.nextLong();
+        sc.nextLine();
+        System.out.println("Enter you email name");
+        String Email = sc.nextLine();
+        if (equals(FirstName))
+            addAddressBook(BookName, FirstName, LastName, Address, City, Zip, State, PhoneNumber, Email);
+        else
+            System.out.println("The Name already exist in contacts please use different name");
+    }
 
-            /**
-             * check duplicate persons in arraylist using iterator class
-             * then shows Details already Exists in address book
-             */
-            if (bookList.size() == 0){
-                addPersonAddress(person);  //add an ArrayList
-            }else {
-                Iterator<AddressBookBluePrint> name = bookList.iterator();
-                while (name.hasNext()){
-                    AddressBookBluePrint tempPerson = name.next();
-                    if (person.getFirstName().contains(firstName)){
-                        System.out.println(firstName+"Details already Exists in address book");
-                        return;
+    public boolean equals(String firstName) {
+        List<AddressBookBluePrint> details = book.get(firstName);
+        if (details == null)
+            return true;
+        return false;
+    }
+
+    //This method helps to edit the details
+    public void editContact() {
+        System.out.println("enter your book name");
+        String bookname = sc.next();
+        ArrayList<AddressBookBluePrint> option = multiBook.get(bookname);
+        System.out.println("enter your name");
+        String name = sc.next();
+        for (AddressBookBluePrint details : option) {
+            if (details.getFirstName().equals(name)) {
+                boolean conditon = true;
+                while (conditon) {
+                    System.out.println("enter number  1:first_name 2:last_name 3:address 4:City 5:zip 6:state 7:phone_number" +
+                            " 8:email  0:quit");
+                    int check = sc.nextInt();
+                    switch (check) {
+                        case 1:
+                            System.out.println("Enter you first name");
+                            String firstname = sc.next();
+                            details.setFirstName(firstname);
+                            System.out.println(book);
+                            break;
+                        case 2:
+                            System.out.println("Enter you last name");
+                            String lastname = sc.next();
+                            details.setLastName(lastname);
+                            System.out.println(book);
+                            break;
+                        case 3:
+                            System.out.println("Enter you address ");
+                            String addressname = sc.next();
+                            details.setAddress(addressname);
+                            System.out.println(book);
+                            break;
+                        case 4:
+                            System.out.println("Enter you City name");
+                            String cityname = sc.next();
+                            details.setCity(cityname);
+                            System.out.println(book);
+                            break;
+                        case 5:
+                            System.out.println("Enter you Zip name");
+                            int zipname = sc.nextInt();
+                            details.setZip(zipname);
+                            System.out.println(book);
+                            break;
+                        case 6:
+                            System.out.println("Enter you State name");
+                            String statename = sc.next();
+                            details.setState(statename);
+                            System.out.println(book);
+                            break;
+                        case 7:
+                            System.out.println("Enter you Phone number");
+                            long phonenumber = sc.nextLong();
+                            sc.nextLine();
+                            details.setMobileNum(phonenumber);
+                            System.out.println(book);
+                            break;
+                        case 8:
+                            System.out.println("Enter you email");
+                            String emailname = sc.next();
+                            details.seteMail(emailname);
+                            System.out.println(book);
+                            break;
+                        case 0:
+                            conditon = false;
+                            break;
+                        default:
+                            System.out.println("invalid input");
                     }
                 }
-                addPersonAddress(person);  //add an ArrayList
-            }
-
-            //store multiple city's with persons data
-            if (cityList.size() == 0){
-                cityList.put(city, person);
-            }else {
-                cityList.put(city, person);
-            }
-
-            if (stateList.size()==0){
-                stateList.put(state, person);
-            }else {
-                stateList.put(state, person);
             }
         }
-
-        //searching person using City name
-        public void searchPersonInCity(){
-            System.out.println("Enter City Name : ");
-            String cityName = sc.next();
-            if (cityList.containsKey(cityName)){
-                System.out.println(cityList.get(cityName));
-            }
-            System.out.println("No city in this name");
-        }
-    //searching person using State name
-    public void searchPersonInState(){
-        System.out.println("Enter State Name : ");
-        String StateName = sc.next();
-        if (stateList.containsKey(StateName)){
-            System.out.println(stateList.get(StateName));
-        }
-        System.out.println("No State in this name");
     }
 
-        //searching person using first name
-        public AddressBookBluePrint searchPerson(String name) {
-            Iterator iterator = bookList.iterator();
-            for (AddressBookBluePrint names : bookList) {
-                if (iterator.hasNext()) {
-                    AddressBookBluePrint obj = (AddressBookBluePrint) iterator.next();
-                    if (obj.getFirstName().equalsIgnoreCase(name)) {
-                        return obj;
-                    }
+    // This method helps to delete the contact details
+    public void deleteEntry() {
+        System.out.println("enter your name to delete from contact");
+        String name = sc.next();
+        book.remove(name);
+    }
+
+    public void viewPersonByCity() {
+        System.out.println("Enter city");
+        String location = sc.next();
+        sc.nextLine();
+        int flag = 1;
+        for (String entry : city.keySet()) {
+            if (entry.equals(location)) System.out.println(entry);
+            flag = 0;
+        }
+        if (flag == 1) System.out.println("no records found");
+    }
+
+    public void viewPersonByState() {
+        System.out.println("Enter state");
+        String location = sc.next();
+        sc.nextLine();
+        int flag = 1;
+        for (String entry : state.keySet()) {
+            if (entry.equals(location)) System.out.println(entry);
+            flag = 0;
+        }
+        if (flag == 1) System.out.println("no records found");
+    }
+
+    public void getContactByCityOrState() {
+        System.out.println("Enter city or state");
+        String location = sc.next();
+        sc.nextLine();
+        int flag = 1;
+        for (String entry : multiBook.keySet()) {
+            for (AddressBookBluePrint item : multiBook.get(entry)) {
+                if (item.getState().equals(location) || item.getCity().equals(location)) {
+                    System.out.println(item);
+                    flag = 0;
                 }
-
-            }
-            return null;
-        }
-
-        //update person details via searching person with first name
-        public void updatePersondetails() {
-            System.out.println("Enter person Name : ");
-            String name = sc.next();
-            AddressBookBluePrint tempObj = searchPerson(name);
-            System.out.println(tempObj);
-
-            System.out.println("1. update firstname");
-            System.out.println("2. update Lastname");
-            System.out.println("3. update address");
-            System.out.println("4. update city");
-            System.out.println("5. update state");
-            System.out.println("6. update email");
-            System.out.println("7. update zip");
-            System.out.println("8. update phone number");
-            int opt = sc.nextInt();
-
-            switch (opt) {
-                case 1:
-                    System.out.println("Enter new first name : ");
-                    String fName = sc.next();
-                    tempObj.setFirstName(fName);
-                    break;
-                case 2:
-                    System.out.println("Enter new last name : ");
-                    String lName = sc.next();
-                    tempObj.setLastName(lName);
-                    break;
-                case 3:
-                    System.out.println("Enter new address : ");
-                    String address = sc.next();
-                    tempObj.setAddress(address);
-                    break;
-                case 4:
-                    System.out.println("Enter new city : ");
-                    String city = sc.next();
-                    tempObj.setCity(city);
-                    break;
-                case 5:
-                    System.out.println("Enter new State : ");
-                    String state = sc.next();
-                    tempObj.setState(state);
-                    break;
-                case 6:
-                    System.out.println("Enter new Email : ");
-                    String email = sc.next();
-                    tempObj.seteMail(email);
-                    break;
-                case 7:
-                    System.out.println("Enter new ZipCode : ");
-                    int zip = sc.nextInt();
-                    tempObj.setZip(zip);
-                    break;
-                case 8:
-                    System.out.println("Enter new phone number : ");
-                    int phonnum = sc.nextInt();
-                    tempObj.setMobileNum(phonnum);
-                    break;
-            }
-            System.out.printf("Updated Person details = " + tempObj);
-        }
-
-        //remove person with help of his name
-        public void removePersonDetails() {
-            System.out.printf("Enter Name to Delete person in Records : ");
-            String name = sc.next();
-            AddressBookBluePrint person = searchPerson(name);
-            bookList.remove(person);
-            System.out.println("Deleted person = " + person);
-
-        }
-
-        //print hole array list book
-        public void printBook(){
-            for (AddressBookBluePrint perObj: bookList){
-                System.out.println(perObj);
             }
         }
-
-    //method to store multiple address books
-    public void storeCurrentAddressBook() {
-        System.out.println("Enter name for address book: ");
-        String addressBookName = sc.next();
-        storeAddressBooks.put(addressBookName, bookList);
-    }
-
-    //method to print all address books from system
-    public void printAddressBooks() {
-        System.out.println(storeAddressBooks);
-        System.out.println("Address book is stored");
-    }
-
-    @Override
-    public String toString() {
-        return "AddressBookManager [storeAddressBooks=" + storeAddressBooks + ", addressBookList=" + bookList
-                + ", sc=" + sc + "]";
-    }
-
-    //method to create new address book
-    public void creatNewAddressBooks() {
-        bookList.clear();
-        System.out.println("New Address book is created");
+        if (flag == 1) System.out.println("no records found");
     }
 
 
-
-//    public void searchPersonInCityOrSate(){
-//            AddressBookManager map = new AddressBookManager();
-//            for (HashMap<String, List> diffAddressBooks : map.storeAddressBooks){
-//
-//            }
-//    }
-
-
+    // This method helps user to choose action
+    public boolean makechoice() {
+        System.out.println("enter 1:add contact 2:view by city 3:view by state 4:edit contact 5:delete contact" +
+                " 6:person by city or state or 0 to quit");
+        int check = sc.nextInt();
+        boolean conditon = true;
+        switch (check) {
+            case 1:
+                callAddressBook();
+                break;
+            case 2:
+                viewPersonByCity();
+                break;
+            case 3:
+                viewPersonByState();
+                break;
+            case 4:
+                editContact();
+                break;
+            case 5:
+                deleteEntry();
+                break;
+            case 6:
+                getContactByCityOrState();
+                break;
+            case 0:
+                conditon = false;
+                break;
+            default:
+                System.out.println("invalid input");
+        }
+        return conditon;
+    }
 
 
 

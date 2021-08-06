@@ -4,6 +4,7 @@ import java.util.Objects;
 
 public class AddressBookBluePrint {
     //contact required variables
+    private String bookName;
     private String firstName;
     private String lastName;
     private String address;
@@ -14,8 +15,12 @@ public class AddressBookBluePrint {
     private long mobileNum;
 
 
+
+    //default constructor
+    public AddressBookBluePrint(){};
     //constructor variables passing from main
-    public AddressBookBluePrint(String firstName, String lastName, String address, String city, String state, String eMail, int zip, long mobileNum) {
+    public AddressBookBluePrint(String bookName, String firstName, String lastName, String address, String city, int zip, String state, long phoneNumber, String email) {
+        this.bookName = bookName;
         this.firstName = firstName;
         this.lastName = lastName;
         this.address = address;
@@ -25,8 +30,6 @@ public class AddressBookBluePrint {
         this.zip = zip;
         this.mobileNum = mobileNum;
     }
-    //default constructor
-    public AddressBookBluePrint(){};
 
     //printing instance person details
     @Override
@@ -104,7 +107,7 @@ public class AddressBookBluePrint {
         return mobileNum;
     }
 
-    public void setMobileNum(int mobileNum) {
+    public void setMobileNum(long mobileNum) {
         this.mobileNum = mobileNum;
     }
 
@@ -113,5 +116,23 @@ public class AddressBookBluePrint {
     public int hashCode(){
         return Objects.hash(firstName, lastName, address, city, state, zip, mobileNum, eMail);
     }
+
+}
+
+interface MultipleAddressBook {
+
+    public void addAddressBook(String BookName, String FirstName, String LastName, String Address, String City,
+                               int Zip, String State, long PhoneNumber, String Email);
+
+    public void callAddressBook();
+
+    boolean equals(String firstName);
+
+    public void editContact();
+
+    public void deleteEntry();
+
+    public boolean makechoice();
+
 
 }
